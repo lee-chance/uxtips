@@ -111,7 +111,7 @@ export default function OptimisticUIDemo({ variant = "good" }: DemoProps) {
       <p role="status" className="mx-4 mt-2 text-xs text-danger">
         {message}
       </p>
-      <Tap show={step === 1} x="30px" y="calc(40px + 12px + 12px + 64px + 22px)" />
+      <Tap show={step === 1} target="[aria-pressed]" />
       <Hint>{bad ? "실패해도 화면은 ‘좋아요’ 그대로예요" : "하트를 눌러 보고, 실패도 흉내 내 보세요"}</Hint>
     </div>
   );

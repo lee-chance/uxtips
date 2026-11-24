@@ -2,6 +2,10 @@ import type { Category, CategoryId, Pattern } from "./types";
 import { loadingPatterns } from "./patterns/loading";
 import { feedbackPatterns } from "./patterns/feedback";
 import { overlayPatterns } from "./patterns/overlay";
+import { inputPatterns } from "./patterns/input";
+import { navigationPatterns } from "./patterns/navigation";
+import { contentPatterns } from "./patterns/content";
+import { motionPatterns } from "./patterns/motion";
 
 export type { Category, CategoryId, Pattern } from "./types";
 
@@ -24,6 +28,30 @@ export const categories: Category[] = [
     nameEn: "Overlays",
     description: "지금 화면 위에 다른 층을 띄운다.",
   },
+  {
+    id: "input",
+    nameKo: "입력·선택",
+    nameEn: "Input & Selection",
+    description: "값을 넣고, 고르고, 켜고 끈다.",
+  },
+  {
+    id: "navigation",
+    nameKo: "탐색·구조",
+    nameEn: "Navigation & Structure",
+    description: "어디에 있는지 알려 주고 다른 곳으로 옮겨 간다.",
+  },
+  {
+    id: "content",
+    nameKo: "콘텐츠·제스처",
+    nameEn: "Content & Gestures",
+    description: "목록과 콘텐츠를 다루는 손동작과 상태.",
+  },
+  {
+    id: "motion",
+    nameKo: "모션·스크롤",
+    nameEn: "Motion & Scrolling",
+    description: "움직임과 스크롤로 관계와 위치를 알려 준다.",
+  },
 ];
 
 /**
@@ -34,6 +62,10 @@ export const patterns: Pattern[] = [
   ...loadingPatterns,
   ...feedbackPatterns,
   ...overlayPatterns,
+  ...inputPatterns,
+  ...navigationPatterns,
+  ...contentPatterns,
+  ...motionPatterns,
 ];
 
 export function getPattern(slug: string): Pattern | undefined {

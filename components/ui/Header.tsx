@@ -13,9 +13,15 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center gap-2 font-semibold">
-          <span aria-hidden className="grid size-6 place-items-center rounded-md bg-accent text-xs text-accent-fg">
-            UX
-          </span>
+          <svg aria-hidden viewBox="0 0 64 64" className="size-7">
+            <rect width="64" height="64" rx="15" fill="#4f46e5" />
+            <rect x="13" y="12" width="38" height="30" rx="6" fill="#fff" fillOpacity=".28" />
+            <rect x="19" y="19" width="18" height="4" rx="2" fill="#fff" fillOpacity=".7" />
+            <rect x="19" y="27" width="12" height="4" rx="2" fill="#fff" fillOpacity=".45" />
+            <rect x="16" y="40" width="32" height="12" rx="6" fill="#fff" />
+            <circle cx="23" cy="46" r="2.5" fill="#4f46e5" />
+            <rect x="28" y="44.5" width="14" height="3" rx="1.5" fill="#4f46e5" fillOpacity=".55" />
+          </svg>
           <span className="hidden sm:inline">패턴 도감</span>
           <span className="sr-only sm:hidden">UX 패턴 도감</span>
         </Link>

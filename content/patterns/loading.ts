@@ -369,6 +369,10 @@ const startY = useRef<number | null>(null);
         slug: "progress-bar",
         difference: "단계 표시는 사용자가 거쳐 가는 단계의 위치이고, 프로그레스 바는 시스템이 하는 작업의 진행률이다.",
       },
+      {
+        slug: "quantity-stepper",
+        difference: "둘 다 Stepper라 불리지만, 단계 표시는 여러 단계 중 지금 위치를 보여 주고, 수량 조절은 +/− 버튼으로 숫자를 바꾼다.",
+      },
     ],
     antiPattern: {
       title: "이름 없는 점만 늘어놓은 단계 표시",

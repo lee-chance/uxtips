@@ -60,7 +60,7 @@ export default function SnackbarDemo({ variant = "good" }: DemoProps) {
           {bad ? "스낵바가 사라져서 되돌릴 방법이 없어요." : null}
         </p>
       )}
-      <Tap show={step === 1} x="calc(100% - 34px)" y="83px" />
+      <Tap show={step === 1} target="li:first-child button" />
       <Tap show={step === 3} x="calc(100% - 62px)" y="calc(100% - 38px)" />
 
       <div

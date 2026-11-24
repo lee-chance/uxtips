@@ -60,8 +60,8 @@ export default function UndoDemo({ variant = "good" }: DemoProps) {
           )}
         </AnimatePresence>
       </ul>
-      <Tap show={step === 1} x="calc(100% - 34px)" y="62px" />
-      <Tap show={step === 3} x="calc(100% - 44px)" y="62px" />
+      <Tap show={step === 1} target="li:first-child button" />
+      <Tap show={step === 3} target="li:first-child button" />
 
       {/* 나쁜 예: 매번 확인창으로 묻는다 */}
       <AnimatePresence>

@@ -9,6 +9,14 @@ export const metadata: Metadata = {
     template: "%s · UX 패턴 도감",
   },
   description: "매일 보지만 이름을 몰랐던 UI 패턴을 직접 눌러 보는 예시와 정확한 이름으로.",
+  applicationName: "UX 패턴 도감",
+  // 공유 미리보기(opengraph-image.png)는 Vercel에서 배포 주소 기준으로 절대 URL이 된다
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    siteName: "UX 패턴 도감",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PatternGrid } from "@/components/ui/PatternGrid";
-import { patterns } from "@/content/patterns";
+import { categories, patterns } from "@/content/patterns";
 
 export default function Home() {
   return (
@@ -17,6 +17,23 @@ export default function Home() {
           </Link>
           을 보세요.
         </p>
+        <nav aria-label="카테고리 바로가기" className="mt-6">
+          <ul className="flex flex-wrap gap-2 text-sm">
+            {categories.map((c) => (
+              <li key={c.id}>
+                <a
+                  href={`#cat-${c.id}`}
+                  className="block rounded-full border border-line bg-surface px-3 py-1.5 hover:border-accent/50"
+                >
+                  {c.nameKo}
+                  <span className="ml-1.5 text-muted">
+                    {patterns.filter((p) => p.category === c.id).length}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </section>
       <PatternGrid />
     </>

@@ -39,7 +39,7 @@ export default function PairsPage() {
         </nav>
       </section>
 
-      <div className="mt-8 space-y-6">
+      <div className="mt-10 space-y-10">
         {pairs.map((pair) => (
           <section
             key={id(pair)}
@@ -51,7 +51,7 @@ export default function PairsPage() {
               {pair.a.nameKo} <span className="text-muted">vs</span> {pair.b.nameKo}
             </h2>
             <p className="mt-1">{pair.difference}</p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="mt-5 grid gap-6 sm:grid-cols-2">
               {[pair.a, pair.b].map((p) => (
                 <Link
                   key={p.slug}

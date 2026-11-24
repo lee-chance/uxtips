@@ -9,6 +9,7 @@
 import { motion } from "motion/react";
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   type ButtonHTMLAttributes,
   type ReactNode,
@@ -34,13 +35,18 @@ export function Stage({
         "@container relative isolate h-full w-full overflow-hidden bg-surface text-fg",
         className,
       )}
+      data-stage
     >
       {children}
     </div>
   );
 }
 
-/** 앱 화면처럼 보이게 하는 상단 바 */
+/**
+ * 앱 화면처럼 보이게 하는 상단 바. 상세 데모에서만 제목과 함께 보인다.
+ * 카드 미리보기(autoplay)에서는 이름이 카드 아래에 이미 있으므로 제목을 숨기고,
+ * 오른쪽 트리거(right)가 있을 때만 그 버튼이 앉을 자리를 남긴다.
+ */
 export function AppBar({
   title = "받은 편지함",
   right,
@@ -48,8 +54,13 @@ export function AppBar({
   title?: string;
   right?: ReactNode;
 }) {
+  const { autoplay } = useDemoEnv();
+  if (autoplay) {
+    if (!right) return null;
+    return <div className="flex h-10 shrink-0 items-center justify-end px-3">{right}</div>;
+  }
   return (
-    <div className="flex h-10 items-center justify-between border-b border-line px-3 text-[13px] font-semibold">
+    <div className="flex h-10 shrink-0 items-center justify-between border-b border-line px-3 text-[13px] font-semibold">
       <span>{title}</span>
       {right}
     </div>
@@ -113,13 +124,39 @@ export function Scrim({ onClick, show = true }: { onClick?: () => void; show?: b
 
 /**
  * 자동 재생 때 "여기를 눌렀다"를 보여 주는 손가락 점.
- * show가 true가 되는 순간 눌리는 애니메이션을 한다.
+ * target(무대 안 CSS 선택자)을 주면 그 요소의 가운데를 누른다. 레이아웃이 바뀌어도 맞는다.
+ * target이 없으면 x, y 좌표를 쓴다.
  */
-export function Tap({ show, x, y }: { show: boolean; x: string; y: string }) {
+export function Tap({
+  show,
+  target,
+  x = "50%",
+  y = "50%",
+}: {
+  show: boolean;
+  target?: string;
+  x?: string;
+  y?: string;
+}) {
   const { autoplay } = useDemoEnv();
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const dot = ref.current;
+    if (!dot || !target || !show) return;
+    const stage = dot.closest("[data-stage]");
+    const el = stage?.querySelector(target);
+    if (!stage || !el) return;
+    const s = stage.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    dot.style.left = `${r.left - s.left + r.width / 2}px`;
+    dot.style.top = `${r.top - s.top + r.height / 2}px`;
+  }, [show, target]);
+
   if (!autoplay) return null;
   return (
     <motion.span
+      ref={ref}
       aria-hidden
       className="pointer-events-none absolute z-50 size-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-black/30 shadow-lg dark:bg-white/40"
       style={{ left: x, top: y }}

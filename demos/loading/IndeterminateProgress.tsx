@@ -44,6 +44,7 @@ export default function IndeterminateProgressDemo({ variant = "good" }: DemoProp
           {bad ? "2024년 전체 거래 내역" : "제주 숙소"}
         </div>
         <DemoButton
+          data-tap
           size="sm"
           disabled={loading}
           onClick={() => {
@@ -54,7 +55,7 @@ export default function IndeterminateProgressDemo({ variant = "good" }: DemoProp
           {bad ? "내보내기" : "검색"}
         </DemoButton>
       </div>
-      <Tap show={step === 1} x="calc(100% - 36px)" y="68px" />
+      <Tap show={step === 1} target="[data-tap]" />
 
       <div aria-busy={loading} className="flex-1 overflow-hidden">
         <span role="status" className="sr-only">

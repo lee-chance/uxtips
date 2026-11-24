@@ -31,6 +31,7 @@ export default function AlertDemo({ variant = "good" }: DemoProps) {
             <p className="text-xs text-muted">{deleted ? "삭제됨" : "어제 수정"}</p>
           </div>
           <DemoButton
+            data-tap
             tone="secondary"
             size="sm"
             disabled={deleted}
@@ -45,7 +46,7 @@ export default function AlertDemo({ variant = "good" }: DemoProps) {
           </button>
         )}
       </div>
-      <Tap show={step === 1} x="calc(100% - 46px)" y="72px" />
+      <Tap show={step === 1} target="[data-tap]" />
       <Hint>삭제를 눌러 보세요</Hint>
 
       <AnimatePresence>

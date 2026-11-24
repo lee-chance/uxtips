@@ -7,6 +7,8 @@ import ActionSheet from "./ActionSheet";
 import Drawer from "./Drawer";
 import Popover from "./Popover";
 import FullscreenOverlay from "./FullscreenOverlay";
+import ContextMenu from "./ContextMenu";
+import ShareSheet from "./ShareSheet";
 
 export const overlayDemos: Record<string, ComponentType<DemoProps>> = {
   modal: Modal,
@@ -16,4 +18,6 @@ export const overlayDemos: Record<string, ComponentType<DemoProps>> = {
   drawer: Drawer,
   popover: Popover,
   "fullscreen-overlay": FullscreenOverlay,
+  "context-menu": ContextMenu,
+  "share-sheet": ShareSheet,
 };

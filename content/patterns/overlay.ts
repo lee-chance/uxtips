@@ -419,4 +419,126 @@ function SaveDialog() {
       { label: "Apple HIG — Modality", url: "https://developer.apple.com/design/human-interface-guidelines/modality" },
     ],
   },
+  {
+    slug: "context-menu",
+    category: "overlay",
+    nameKo: "컨텍스트 메뉴",
+    nameEn: "Context menu",
+    aliases: ["Contextual menu", "Right-click menu", "Long-press menu", "우클릭 메뉴", "길게 누르기 메뉴", "오른쪽 클릭 메뉴"],
+    nameNote:
+      "Apple HIG는 Context menu, NN/g는 Contextual menu라고 부른다. 데스크톱에서는 오른쪽 클릭, 모바일에서는 길게 누르기로 연다.",
+    oneLiner: "항목을 오른쪽 클릭하거나 길게 누르면 그 자리에 그 항목에 쓸 수 있는 동작만 모아 띄우는 메뉴.",
+    whenToUse: [
+      "파일·사진·메시지처럼 항목마다 자주 쓰는 동작(공유, 이름 바꾸기, 삭제)을 빠르게 꺼내게 할 때",
+      "숨은 손동작이라 모르는 사람이 많으니, 같은 동작을 '⋯' 버튼이나 다른 길로도 쓸 수 있게 할 때",
+      "키보드로는 Shift+F10이나 메뉴 키로 열고, 화살표로 옮기고 Esc로 닫게 할 때",
+    ],
+    confusedWith: [
+      {
+        slug: "dropdown-menu",
+        difference: "드롭다운 메뉴는 눈에 보이는 버튼을 눌러 열고, 컨텍스트 메뉴는 항목 자체를 오른쪽 클릭·길게 눌러 그 자리에서 연다.",
+      },
+      {
+        slug: "action-sheet",
+        difference: "액션시트는 버튼을 누르면 화면 아래에서 올라오는 선택지 목록이고, 컨텍스트 메뉴는 누른 항목 바로 옆에 뜬다.",
+      },
+    ],
+    antiPattern: {
+      title: "길게 눌러야만 나오는 동작",
+      description:
+        "삭제·공유 같은 동작을 길게 누르기로만 열 수 있으면, 그 손동작을 모르는 사용자와 키보드 사용자는 기능이 있다는 것조차 알 수 없다. 컨텍스트 메뉴는 지름길이어야지 유일한 길이면 안 된다.",
+    },
+    aiPrompt:
+      "사진 격자에서 사진을 오른쪽 클릭하거나 0.5초 길게 누르면 그 위치에 role=\"menu\" 컨텍스트 메뉴(공유·즐겨찾기·이름 바꾸기·삭제)를 띄워 줘. 같은 메뉴를 사진 귀퉁이 '⋯' 버튼과 Shift+F10으로도 열고, 화살표로 이동, Esc로 닫으면 사진으로 포커스를 돌려줘.",
+    code: {
+      language: "tsx",
+      snippet: `const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
+const press = useRef<number>();
+
+<button
+  onContextMenu={(e) => { e.preventDefault(); setMenu({ x: e.clientX, y: e.clientY }); }}
+  onPointerDown={(e) => {
+    const { clientX: x, clientY: y } = e;
+    press.current = window.setTimeout(() => setMenu({ x, y }), 500); // 길게 누르기
+  }}
+  onPointerUp={() => clearTimeout(press.current)}
+  onKeyDown={(e) => {
+    if (e.key === "ContextMenu" || (e.shiftKey && e.key === "F10")) {
+      e.preventDefault();
+      const r = e.currentTarget.getBoundingClientRect();
+      setMenu({ x: r.left, y: r.bottom });
+    }
+  }}
+>
+  사진
+</button>
+<button aria-label="사진 더 보기" aria-haspopup="menu" onClick={openFromButton}>⋯</button>
+
+{menu && (
+  <div role="menu" style={{ position: "fixed", left: menu.x, top: menu.y }}>
+    <button role="menuitem">공유</button>
+    <button role="menuitem">삭제</button>
+  </div>
+)}`,
+    },
+    sources: [
+      { label: "Apple HIG — Context menus", url: "https://developer.apple.com/design/human-interface-guidelines/context-menus" },
+      { label: "NN/g — Contextual Menus: Delivering Relevant Tools for Tasks", url: "https://www.nngroup.com/articles/contextual-menus/" },
+      { label: "WAI-ARIA APG — Menu Button Pattern", url: "https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" },
+    ],
+  },
+  {
+    slug: "share-sheet",
+    category: "overlay",
+    nameKo: "공유 시트",
+    nameEn: "Share sheet",
+    aliases: ["Activity view", "Share menu", "Native share", "공유하기", "공유 메뉴"],
+    nameNote:
+      "Apple HIG는 시스템 공유 화면을 Activity view라고 부르고, 흔히 share sheet라고 한다. 웹에서는 navigator.share()를 지원하는 기기에서 이 시스템 화면을 그대로 띄울 수 있다.",
+    oneLiner: "공유 버튼을 누르면 아래에서 올라와 보낼 앱과 '링크 복사' 같은 동작을 한곳에 모아 보여 주는 시트.",
+    whenToUse: [
+      "글·사진·링크를 다른 앱이나 사람에게 보내게 할 때",
+      "가능하면 운영체제의 공유 화면(navigator.share)을 쓰고, 지원하지 않을 때만 직접 만든 시트를 보여 줄 때",
+      "어떤 환경에서도 되는 '링크 복사'를 항상 넣고, 무엇을 공유하는지 미리보기로 보여 줄 때",
+    ],
+    confusedWith: [
+      {
+        slug: "action-sheet",
+        difference: "액션시트는 지금 항목에 할 동작을 고르고, 공유 시트는 보낼 곳(앱·사람)과 복사 같은 공유 동작을 고른다.",
+      },
+      {
+        slug: "bottom-sheet",
+        difference: "바텀시트는 아래에서 올라오는 판 전반이고, 공유 시트는 그 형태로 공유 대상을 모아 보여 주는 특정한 쓰임이다.",
+      },
+    ],
+    antiPattern: {
+      title: "이름 없는 작은 SNS 아이콘 12개",
+      description:
+        "가운데 팝업에 작은 소셜 아이콘만 잔뜩 늘어놓고 이름도 '링크 복사'도 없으면, 무엇을 눌러야 할지 모르고 정작 가장 많이 쓰는 링크 복사를 할 수 없다.",
+    },
+    aiPrompt:
+      "공유 버튼을 누르면 navigator.share가 있으면 그걸 쓰고, 없으면 아래에서 올라오는 공유 시트를 보여 줘. 시트에는 공유할 글 미리보기, 앱 4개(이름 포함), '링크 복사' 버튼을 넣고, Esc·배경 클릭·아래로 끌기로 닫히게 해 줘.",
+    code: {
+      language: "ts",
+      snippet: `async function share(data: { title: string; url: string }, openFallbackSheet: () => void) {
+  if (navigator.share) {
+    try {
+      await navigator.share(data);      // 운영체제 공유 화면
+      return;
+    } catch (e) {
+      if ((e as DOMException).name === "AbortError") return; // 사용자가 닫음
+    }
+  }
+  openFallbackSheet();                  // 직접 만든 공유 시트
+}
+
+async function copyLink(url: string) {
+  await navigator.clipboard.writeText(url);
+}`,
+    },
+    sources: [
+      { label: "Apple HIG — Activity views", url: "https://developer.apple.com/design/human-interface-guidelines/activity-views" },
+      { label: "Material Design 3 — Bottom sheets", url: "https://m3.material.io/components/bottom-sheets/overview" },
+    ],
+  },
 ];

@@ -30,11 +30,11 @@ export default function ToastDemo({ variant = "good" }: DemoProps) {
   return (
     <div className="flex h-full flex-col">
       <AppBar title="메모" />
-      <FakeList rows={3} />
-      <div className="mt-auto flex justify-center pb-16">
-        <DemoButton onClick={fire}>{bad ? "결제하기" : "저장"}</DemoButton>
+      <FakeList rows={2} />
+      <div className="flex flex-1 items-center justify-center pb-12">
+        <DemoButton data-tap onClick={fire}>{bad ? "결제하기" : "저장"}</DemoButton>
       </div>
-      <Tap show={step === 1} x="50%" y="calc(100% - 82px)" />
+      <Tap show={step === 1} target="[data-tap]" />
 
       {/* 스크린리더가 읽도록 role=status 영역은 항상 존재하게 둔다 */}
       <div role="status" aria-live="polite" className="pointer-events-none absolute inset-x-0 bottom-4 z-20 flex justify-center px-4">

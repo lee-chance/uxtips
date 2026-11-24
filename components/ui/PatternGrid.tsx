@@ -25,16 +25,16 @@ export function PatternGrid() {
         if (items.length === 0) return null;
         const total = patterns.filter((p) => p.category === cat.id).length;
         return (
-          <section key={cat.id} aria-labelledby={`cat-${cat.id}`} className="mt-10 first:mt-6">
-            <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <h2 id={`cat-${cat.id}`} className="text-lg font-semibold">
+          <section key={cat.id} aria-labelledby={`cat-${cat.id}`} className="mt-16 first:mt-8">
+            <div className="mb-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h2 id={`cat-${cat.id}`} className="scroll-mt-20 text-lg font-semibold">
                 {cat.nameKo} <span className="font-normal text-muted">{cat.nameEn}</span>
               </h2>
               <span className="text-sm text-muted">
                 {cat.description} · {q ? `${items.length}/${total}` : total}개
               </span>
             </div>
-            <ul className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <ul className="grid grid-cols-1 gap-x-6 gap-y-8 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {items.map((p) => (
                 <li key={p.slug}>
                   <PatternCard pattern={p} />

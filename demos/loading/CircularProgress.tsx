@@ -55,7 +55,7 @@ export default function CircularProgressDemo({ variant = "good" }: DemoProps) {
               fill="none"
               strokeWidth="6"
               strokeLinecap="round"
-              className="stroke-accent transition-[stroke-dashoffset] duration-100 ease-linear"
+              className={`stroke-accent ${auto === null ? "transition-[stroke-dashoffset] duration-100 ease-linear" : ""}`}
               strokeDasharray={C}
               strokeDashoffset={C * (1 - value)}
             />

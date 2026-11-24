@@ -100,7 +100,7 @@ export default function PopoverDemo({ variant = "good" }: DemoProps) {
         </AnimatePresence>
       </div>
       <FakeList rows={3} />
-      <Tap show={step === 1} x="calc(100% - 40px)" y="62px" />
+      <Tap show={step === 1} target="[aria-haspopup]" />
       <Hint>{bad ? "입력하다가 바깥을 누르면 모두 사라져요" : "공유를 눌러 보세요 · Esc나 바깥 클릭으로 닫기"}</Hint>
     </div>
   );

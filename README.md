@@ -15,7 +15,19 @@ npm run build      # 정적 생성 + 타입 검사
 npm run typecheck  # 타입 검사만
 ```
 
-Vercel에 저장소를 연결하면 별도 설정 없이 배포된다.
+## 배포 (Vercel)
+
+모든 페이지가 빌드 때 정적으로 만들어지므로 환경 변수나 별도 설정이 필요 없다.
+
+1. GitHub에 저장소를 올린다.
+2. Vercel에서 New Project → 저장소 가져오기. Framework는 Next.js로 자동 인식된다.
+3. 이후 `main`에 push하면 자동으로 다시 배포된다.
+
+또는 Vercel CLI로 바로 올릴 수 있다: `npx vercel` (미리보기), `npx vercel --prod` (프로덕션).
+
+- 파비콘: `app/favicon.ico`, `app/icon.svg`, `app/apple-icon.png`
+- 링크 공유 미리보기: `app/opengraph-image.png` (1200×630). Vercel에서는 배포 주소를 기준으로 절대 URL이 자동으로 붙는다.
+  로컬 빌드에서 나오는 `metadataBase` 경고는 이 때문이며 무시해도 된다. 커스텀 도메인을 쓰면 `app/layout.tsx`의 metadata에 `metadataBase`를 넣는다.
 
 ## 구조
 
@@ -23,12 +35,11 @@ Vercel에 저장소를 연결하면 별도 설정 없이 배포된다.
 content/
   types.ts               Pattern 스키마
   patterns.ts            전체 목록·카테고리·검색·헷갈리는 짝 계산
-  patterns/loading.ts    카테고리별 패턴 데이터
-  patterns/feedback.ts
-  patterns/overlay.ts
+  patterns/<카테고리>.ts  카테고리별 패턴 데이터
+                         (loading, feedback, overlay, input, navigation, content)
 demos/
   index.ts               slug → 데모 컴포넌트 등록부
-  loading/ feedback/ overlay/
+  <카테고리>/index.ts     카테고리별 데모 등록
 components/demo/
   context.tsx            useScript(자동 재생 타임라인), DemoProvider
   kit.tsx                Stage·Scrim·Tap·useFocusTrap 등 데모 공용 부품
@@ -105,5 +116,15 @@ export default function MyDemo({ variant = "good" }: DemoProps) {
 - 색은 `app/globals.css`의 토큰(`bg-surface`, `text-muted`, `bg-accent` …)만 쓴다. 라이트·다크가 자동으로 맞춰진다.
 - GIF·MP4를 쓰지 않는다.
 
+- 카드 미리보기(약 300×225)에서는 `AppBar` 제목이 숨겨진다(`right`가 있으면 그 버튼만 남는다). 헤더 없이도 넘치지 않게 만든다.
+- 자동 재생의 누르는 손가락은 `<Tap show target="[data-tap]" />`처럼 대상 요소를 선택자로 가리킨다.
+- 매 프레임 바뀌는 값(`useLoopProgress`)에는 CSS transition을 걸지 않는다(늦게 따라오고 되감긴다).
+
 데이터와 데모를 추가하면 홈 카드, 상세 페이지, 검색, 헷갈리는 짝 페이지에 자동으로 반영된다.
 데모를 아직 만들지 않았으면 카드에 "데모 준비 중"이 보인다.
+
+### 카테고리 추가
+
+1. `content/types.ts`의 `CategoryId`에 id를 더한다.
+2. `content/patterns.ts`의 `categories`에 이름·설명을 넣고, 새 `content/patterns/<id>.ts`를 `patterns` 배열에 펼친다.
+3. `demos/<id>/index.ts`를 만들고 `demos/index.ts`의 `demos`에 펼친다.

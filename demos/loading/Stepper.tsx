@@ -72,7 +72,7 @@ export default function StepperDemo({ variant = "good" }: DemoProps) {
         </ol>
       )}
 
-      <div className="mx-3 mt-2 flex-1 rounded-lg border border-line p-3 text-xs @md:mx-10">
+      <div className="mx-3 mt-2 min-h-0 flex-1 overflow-hidden rounded-lg border border-line p-3 text-xs @md:mx-10">
         <p className="font-semibold">
           {bad ? "다음 정보를 입력하세요" : `${current + 1}단계 · ${STEPS[current]}`}
         </p>
@@ -82,15 +82,15 @@ export default function StepperDemo({ variant = "good" }: DemoProps) {
         </div>
       </div>
 
-      <div className="flex justify-between px-3 pb-8 pt-3 @md:px-10">
+      <div className={cx("flex justify-between px-3 pt-3 @md:px-10", step === null ? "pb-8" : "pb-3")}>
         <DemoButton size="sm" tone="secondary" disabled={current === 0} onClick={() => setUser((s) => s - 1)}>
           이전
         </DemoButton>
-        <DemoButton size="sm" disabled={current === total - 1} onClick={() => setUser((s) => s + 1)}>
+        <DemoButton data-tap size="sm" disabled={current === total - 1} onClick={() => setUser((s) => s + 1)}>
           다음
         </DemoButton>
       </div>
-      <Tap show={tapping} x="calc(100% - 34px)" y="calc(100% - 46px)" />
+      <Tap show={tapping} target="[data-tap]" />
       <span role="status" className="sr-only">
         {step === null && !bad ? `${current + 1}단계 ${STEPS[current]}` : ""}
       </span>

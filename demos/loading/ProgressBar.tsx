@@ -58,7 +58,7 @@ export default function ProgressBarDemo({ variant = "good" }: DemoProps) {
           className="h-2 overflow-hidden rounded-full bg-surface-3"
         >
           <div
-            className="h-full rounded-full bg-accent transition-[width] duration-150 ease-linear"
+            className={`h-full rounded-full bg-accent ${auto === null ? "transition-[width] duration-150 ease-linear" : ""}`}
             style={{ width: `${pct}%` }}
           />
         </div>

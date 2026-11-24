@@ -76,7 +76,7 @@ export default function BannerDemo({ variant = "good" }: DemoProps) {
           </DemoButton>
         </div>
       )}
-      <Tap show={step === 2} x="calc(100% - 24px)" y="62px" />
+      <Tap show={step === 2} target='[aria-label="알림 닫기"]' />
       <Hint>배너는 닫을 때까지 머물러요</Hint>
     </div>
   );

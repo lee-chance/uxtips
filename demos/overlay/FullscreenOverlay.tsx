@@ -24,6 +24,7 @@ export default function FullscreenOverlayDemo({ variant = "good" }: DemoProps) {
       <AppBar title="여행" />
       <div className="p-3 pb-0">
         <button
+          data-tap
           type="button"
           onClick={() => setUserOpen(true)}
           className="flex h-9 w-full items-center gap-2 rounded-full bg-surface-2 px-3 text-left text-sm text-muted"
@@ -33,7 +34,7 @@ export default function FullscreenOverlayDemo({ variant = "good" }: DemoProps) {
         </button>
       </div>
       <FakeList rows={3} />
-      <Tap show={step === 1} x="50%" y="62px" />
+      <Tap show={step === 1} target="[data-tap]" />
       <Hint>검색창을 눌러 보세요</Hint>
 
       <AnimatePresence>

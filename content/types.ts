@@ -1,4 +1,11 @@
-export type CategoryId = "loading" | "feedback" | "overlay";
+export type CategoryId =
+  | "loading"
+  | "feedback"
+  | "overlay"
+  | "input"
+  | "navigation"
+  | "content"
+  | "motion";
 
 export interface Category {
   id: CategoryId;
