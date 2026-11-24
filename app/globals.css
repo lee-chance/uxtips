@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 중립 톤 + 강조색 하나(accent). 데모 컴포넌트도 이 토큰만 쓴다. */
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f2f2f3;
+  --surface-3: #e6e6e8;
+  --fg: #18181b;
+  --muted: #5f5f68;
+  --line: #e2e2e5;
+  --accent: #4f46e5;
+  --accent-fg: #ffffff;
+  --accent-soft: #e9e8fd;
+  --danger: #c0262d;
+  --danger-soft: #fdecec;
+  --success: #17803d;
+  --success-soft: #e6f6ec;
+  --scrim: rgb(9 9 11 / 0.45);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0d0d10;
+  --surface: #17171b;
+  --surface-2: #212126;
+  --surface-3: #2e2e35;
+  --fg: #ededf0;
+  --muted: #a3a3ad;
+  --line: #2c2c33;
+  --accent: #8b85ff;
+  --accent-fg: #0d0d10;
+  --accent-soft: #26244a;
+  --danger: #ff7b7b;
+  --danger-soft: #3a1a1c;
+  --success: #5fd08a;
+  --success-soft: #15301f;
+  --scrim: rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-scrim: var(--scrim);
+  --font-sans:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-sans);
+  word-break: keep-all;
+}
+
+/* 키보드 포커스는 항상 보이게 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    transform: translateX(-100%) scaleX(0.4);
+  }
+  60% {
+    transform: translateX(60%) scaleX(0.6);
+  }
+  100% {
+    transform: translateX(120%) scaleX(0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
